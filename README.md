@@ -23,7 +23,14 @@ GNOME Shell 45+ (Ubuntu Gnome 23.10+)
 
 [Install from extensions.gnome.org](https://extensions.gnome.org/extension/1295/google-earth-wallpaper/)
 
-or install directly to your GNOME extensions directory (if you want to hack on it)
+or install directly to your GNOME extensions directory (if you want to hack on it), ensuring you have
+the following packages in your build environment:
+- glib
+- zip/unzip
+- gettext
+- intltool
+- nodejs (for npm)
+- eslint
 
 ```
 mkdir ~/source
