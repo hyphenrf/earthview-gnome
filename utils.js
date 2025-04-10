@@ -60,35 +60,26 @@ export function initSoup(version) {
 }
 
 export function fetch_change_log(version, label, httpSession) {
-    const PACKAGE_VERSION = globalThis.GoogleEarthWallpaperState.PACKAGE_VERSION;
-	// create an http message
-	let url = gitreleaseurl + "v" + version;
-	let request = Soup.Message.new('GET', url);
-	httpSession.user_agent = 'User-Agent: Mozilla/5.0 (X11; GNOME Shell/' + PACKAGE_VERSION + '; Linux x86_64; +https://github.com/neffo/earth-view-wallpaper-gnome-extension ) Google Earth Wallpaper Gnome Extension/' + version;
-	
+    // create an http message
+    let url = gitreleaseurl + "v" + version;
+    let request = Soup.Message.new('GET', url);
+
     // queue the http request
     log("Fetching "+url);
-    try {
-        if (Soup.MAJOR_VERSION >= 3) {
-            httpSession.send_and_read_async(request, GLib.PRIORITY_DEFAULT, null, (httpSession, message) => {
-                let data = Bytes.decode(httpSession.send_and_read_finish(message).get_data());
-                let text = JSON.parse(data).body;
-                label.set_label(text);
-            });
+
+    // a try block doesn't catch async exceptions from outside the callback
+    httpSession.send_and_read_async(request, GLib.PRIORITY_DEFAULT, null, (httpSession, message) => {
+        try {
+            let data = Bytes.decode(httpSession.send_and_read_finish(message).get_data());
+            let text = JSON.parse(data).body;
+            label.set_label(text);
         }
-        else {
-            httpSession.queue_message(request, (httpSession, message) => {
-                let data = message.response_body.data;
-                let text = JSON.parse(data).body;
-                label.set_label(text);
-            });
+        catch (error) {
+            log("Error fetching change log: " + error);
+            const _ = globalThis.GoogleEarthWallpaperState.gettext;
+            label.set_label(_("Error fetching change log: "+error));
         }
-    } 
-    catch (error) {
-        log("Error fetching change log: " + error);
-        const _ = globalThis.GoogleEarthWallpaperState.gettext;
-        label.set_label(_("Error fetching change log: "+error));
-    }
+    });
 }
 
 export function validate_icon(settings, dir, icon_image = null) {
