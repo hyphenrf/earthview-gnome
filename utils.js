@@ -83,18 +83,18 @@ export function fetch_change_log(version, label, httpSession) {
 }
 
 export function validate_icon(settings, dir, icon_image = null) {
-	log('validate_icon()');
-	let icon_name = settings.get_string('icon');
-	if (icon_name == "" || icon_list.indexOf(icon_name) == -1) {
-		settings.reset('icon');
-		icon_name = settings.get_string('icon');
-	}
-	// if called from prefs
-	if (icon_image) { 
-		log('set icon to: ' + dir.get_path() + '/icons/' + icon_name + '-symbolic.svg');
-		let pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(dir.get_path() + '/icons/' + icon_list_filename[icon_list.indexOf(icon_name)] + '.svg', 32, 32);
-		icon_image.set_from_pixbuf(pixbuf);
-	}
+    log('validate_icon()');
+    let icon_name = settings.get_string('icon');
+    if (icon_name == "" || icon_list.indexOf(icon_name) == -1) {
+        settings.reset('icon');
+        icon_name = settings.get_string('icon');
+    }
+    // if called from prefs
+    if (icon_image) {
+        log('set icon to: ' + dir.get_path() + '/icons/' + icon_name + '-symbolic.svg');
+        let pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_size(dir.get_path() + '/icons/' + icon_list_filename[icon_list.indexOf(icon_name)] + '.svg', 32, 32);
+        icon_image.set_from_pixbuf(pixbuf);
+    }
 }
 
 export function moveImagesToNewFolder(settings, oldPath, newPath) {
@@ -111,7 +111,7 @@ export function moveImagesToNewFolder(settings, oldPath, newPath) {
             log('file: ' + slash(oldPath) + filename + ' -> ' + slash(newPath) + filename);
             let cur = Gio.file_new_for_path(slash(oldPath) + filename);
             let dest = Gio.file_new_for_path(slash(newPath) + filename);
-            cur.move(dest, Gio.FileCopyFlags.OVERWRITE, null, () => { 
+            cur.move(dest, Gio.FileCopyFlags.OVERWRITE, null, () => {
                 log ('...moved');
             });
         }
@@ -131,16 +131,16 @@ function slash(path) {
 function moveBackground(oldPath, newPath, schema) {
     let gsettings = new Gio.Settings({schema: schema});
     let uri;
-	let dark_uri;
-	uri = gsettings.get_string('picture-uri');
+    let dark_uri;
+    uri = gsettings.get_string('picture-uri');
     gsettings.set_string('picture-uri', uri.replace(oldPath, newPath));
-	try {
-		dark_uri = gsettings.get_string('picture-uri-dark');
-		gsettings.set_string('picture-uri-dark', dark_uri.replace(oldPath, newPath));
-	}
-	catch (e) {
-		log('no dark background gsettings key found ('+e+')');
-	}
+    try {
+        dark_uri = gsettings.get_string('picture-uri-dark');
+        gsettings.set_string('picture-uri-dark', dark_uri.replace(oldPath, newPath));
+    }
+    catch (e) {
+        log('no dark background gsettings key found ('+e+')');
+    }
 
     Gio.Settings.sync();
     gsettings.apply();
