@@ -19,9 +19,6 @@ import { ExtensionPreferences, gettext as _ } from 'resource:///org/gnome/Shell/
 import * as Utils from './utils.js';
 
 
-const intervals = [ 300, 600, 1800, 3600, 4800, 86400 ];
-const interval_names = [ "5 m", "10 m", "30 m", "60 m", "90 m", "daily"];
-
 const providerNames = ['Google Earth', 'Google Maps', 'Bing Maps', 'OpenStreetMap' , 'GNOME Maps'];
 
 const PREFS_DEFAULT_WIDTH = 800;
@@ -148,9 +145,12 @@ export default class GoogleEarthWallpaperPrefs extends ExtensionPreferences {
         }
 
         settings.bind('delete-previous', deleteSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
-        const intrvs = interval_names.map(_);
+
+        const intervals = [ 300, 600, 1800, 3600, 4800, 21600, 86400 ];
+        const interval_names = [_("5 m"), _("10 m"), _("30 m"), _("60 m"), _("90 m"), _("6 h"), _("daily")];
+
         intervals.forEach((interval, index) => { // add intervals to dropdown list (aka a GtkComboText)
-            refreshSpin.append(interval.toString(), intrvs[index]);
+            refreshSpin.append(interval.toString(), interval_names[index]);
         });
 
         refreshSpin.set_active_id(settings.get_int('refresh-interval').toString()); // set to current

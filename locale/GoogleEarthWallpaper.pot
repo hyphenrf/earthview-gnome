@@ -175,8 +175,36 @@ msgstr ""
 msgid "Something went wrong..."
 msgstr ""
 
-#: prefs.js:116
+#: prefs.js:113
 msgid "Select folder"
+msgstr ""
+
+#: prefs.js:150
+msgid "5 m"
+msgstr ""
+
+#: prefs.js:150
+msgid "10 m"
+msgstr ""
+
+#: prefs.js:150
+msgid "30 m"
+msgstr ""
+
+#: prefs.js:150
+msgid "60 m"
+msgstr ""
+
+#: prefs.js:150
+msgid "90 m"
+msgstr ""
+
+#: prefs.js:150
+msgid "6 h"
+msgstr ""
+
+#: prefs.js:150
+msgid "daily"
 msgstr ""
 
 #: utils.js:38 utils.js:41
@@ -191,6 +219,6 @@ msgstr ""
 msgid "hours"
 msgstr ""
 
-#: utils.js:90
+#: utils.js:80
 msgid "Error fetching change log: "
 msgstr ""
