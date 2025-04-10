@@ -146,8 +146,8 @@ export default class GoogleEarthWallpaperPrefs extends ExtensionPreferences {
 
         settings.bind('delete-previous', deleteSwitch, 'active', Gio.SettingsBindFlags.DEFAULT);
 
-        const intervals = [ 300, 600, 1800, 3600, 4800, 21600, 86400 ];
-        const interval_names = [_("5 m"), _("10 m"), _("30 m"), _("60 m"), _("90 m"), _("6 h"), _("daily")];
+        const intervals = [ 300, 600, 1800, 3600, 4800, 86400 ];
+        const interval_names = [_("5 m"), _("10 m"), _("30 m"), _("60 m"), _("90 m"), _("daily")];
 
         intervals.forEach((interval, index) => { // add intervals to dropdown list (aka a GtkComboText)
             refreshSpin.append(interval.toString(), interval_names[index]);

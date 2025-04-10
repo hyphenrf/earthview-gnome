@@ -200,10 +200,6 @@ msgid "90 m"
 msgstr ""
 
 #: prefs.js:150
-msgid "6 h"
-msgstr ""
-
-#: prefs.js:150
 msgid "daily"
 msgstr ""
 
